@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Humly Control Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --border: rgba(255,255,255,0.07);
+      --accent: #4f8ef7;
+      --accent-soft: rgba(79,142,247,0.12);
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --header-h: 58px;
+      --footer-h: 44px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg { width: 16px; height: 16px; fill: #fff; }
+
+    .logo-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .logo-text span { color: var(--accent); }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text);
+      background: var(--accent-soft);
+    }
+
+    nav a.active { color: var(--accent); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-dot {
+      width: 7px; height: 7px;
+      background: #34d399;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #34d399;
+    }
+
+    .status-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .btn-open {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid rgba(79,142,247,0.25);
+      border-radius: 6px;
+      padding: 5px 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-open:hover { background: rgba(79,142,247,0.2); }
+
+    /* ── IFRAME WRAPPER ── */
+    .frame-wrap {
+      position: fixed;
+      top: var(--header-h);
+      bottom: var(--footer-h);
+      left: 0; right: 0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: var(--footer-h);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-left span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footer-url {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: monospace;
+      background: rgba(255,255,255,0.04);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .footer-right {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footer-right a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="#">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16"><path d="M3 3h4v4H3zm6 0h4v4H9zM3 9h4v4H3zm6 3h1v1H9zm2 0h1v1h-1zm0-2h1v1h-1z"/></svg>
+      </div>
+      <span class="logo-text">Humly <span>HCP</span></span>
+    </a>
+
+    <nav>
+      <a href="#" class="active">Floor Plan</a>
+      <a href="#">Monitoring</a>
+      <a href="#">Settings</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="status-dot"></div>
+      <span class="status-label">Connected</span>
+      <a class="btn-open" href="https://sandbox25.humly.dev/hcp/floor-plan/1" target="_blank">↗ Open in tab</a>
+    </div>
+  </header>
+
+  <div class="frame-wrap">
+    <iframe
+      src="https://sandbox25.humly.dev/hcp/floor-plan/1"
+      title="Humly Control Panel – Floor Plan"
+      allow="fullscreen"
+    ></iframe>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      <span>Humly Control Panel</span>
+      <span class="footer-url">sandbox25.humly.dev/hcp/floor-plan/1</span>
+    </div>
+    <div class="footer-right">
+      <a href="https://support.humly.com" target="_blank">Support</a>
+      &nbsp;·&nbsp;
+      <span>© 2026 Humly Solutions AB</span>
+    </div>
+  </footer>
+
+</body>
+</html>
